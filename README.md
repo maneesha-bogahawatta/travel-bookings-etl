@@ -62,7 +62,7 @@ travel-bookings-etl/
 Requirements: Python 3.10+, PostgreSQL 14+.
 
 ```bash
-git clone https://github.com/YOUR_USERNAME/travel-bookings-etl.git
+git clone https://github.com/maneesha-bogahawatta/travel-bookings-etl.git
 cd travel-bookings-etl
 python3 -m venv venv
 source venv/bin/activate
