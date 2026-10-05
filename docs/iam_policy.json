@@ -1,0 +1,24 @@
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Sid": "ListOnlyPipelinePrefixes",
+      "Effect": "Allow",
+      "Action": "s3:ListBucket",
+      "Resource": "arn:aws:s3:::YOUR-BUCKET-NAME",
+      "Condition": {
+        "StringLike": { "s3:prefix": ["raw/*", "processed/*", "rejected/*"] }
+      }
+    },
+    {
+      "Sid": "ReadWritePipelineObjects",
+      "Effect": "Allow",
+      "Action": ["s3:PutObject", "s3:GetObject"],
+      "Resource": [
+        "arn:aws:s3:::YOUR-BUCKET-NAME/raw/*",
+        "arn:aws:s3:::YOUR-BUCKET-NAME/processed/*",
+        "arn:aws:s3:::YOUR-BUCKET-NAME/rejected/*"
+      ]
+    }
+  ]
+}
