@@ -36,3 +36,12 @@ ORDER BY avg_rating DESC;
 SELECT COUNT(*), SUM(price)
 FROM bookings
 WHERE booking_date BETWEEN '2025-03-01' AND '2025-03-31';
+
+-- Q1b: Revenue by category (confirmed bookings only)
+SELECT category,
+       COUNT(*)   AS bookings,
+       SUM(price) AS revenue
+FROM bookings
+WHERE status = 'Confirmed'
+GROUP BY category
+ORDER BY revenue DESC;
