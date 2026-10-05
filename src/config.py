@@ -34,3 +34,4 @@ DB_URL = URL.create(
 # AWS (credentials are read by boto3 from the environment automatically)
 AWS_REGION = os.getenv("AWS_REGION", "ap-south-1")
 S3_BUCKET_NAME = os.getenv("S3_BUCKET_NAME")
+S3_ENDPOINT_URL = os.getenv("S3_ENDPOINT_URL") or None

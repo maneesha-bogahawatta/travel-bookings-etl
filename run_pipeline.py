@@ -5,10 +5,11 @@ Run:  python run_pipeline.py
 import sys
 import time
 
-from src.config import PROCESSED_FILE, REJECTED_FILE
+from src.config import PROCESSED_FILE, RAW_FILE, REJECTED_FILE
 from src.extract import extract
 from src.load import load
 from src.logger import get_logger
+from src.s3_utils import upload_file
 from src.transform import transform
 from src.validate import validate
 
@@ -20,6 +21,8 @@ def main() -> int:
     logger.info("=== Pipeline started ===")
 
     try:
+        upload_file(RAW_FILE, "raw")  # keep an untouched copy of the source in S3
+
         raw = extract()
         clean = transform(raw)
         valid, rejected = validate(clean)
@@ -31,7 +34,8 @@ def main() -> int:
         logger.info("Saved %s clean rows to %s", len(valid), PROCESSED_FILE)
         logger.info("Saved %s rejected rows to %s", len(rejected), REJECTED_FILE)
 
-        # Step 7 will add the S3 upload here
+        upload_file(PROCESSED_FILE, "processed")
+        upload_file(REJECTED_FILE, "rejected")
 
         total = load(valid)
     except Exception:
